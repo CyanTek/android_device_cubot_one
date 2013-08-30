@@ -1,0 +1,6 @@
+Cubot One
+==========
+
+Device Configuration for Cubot One
+-----------------------------------
+Mediatek MT6589 chip based device
