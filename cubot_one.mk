@@ -66,6 +66,8 @@ PRODUCT_COPY_FILES += \
     device/cubot/one/prebuilt/lib/libril.so:obj/lib/libril.so \
     device/cubot/one/prebuilt/lib/librilmtk.so:obj/lib/librilmtk.so \
 	device/cubot/one/prebuilt/lib/librilmtkmd2.so:obj/lib/librilmtkmd2.so \
+	device/cubot/one/prebuilt/lib/mtk-ril.so:obj/lib/mtk-ril.so \
+	device/cubot/one/prebuilt/lib/mtk-rilmd2.so:obj/lib/mtk-rilmd2.so \
     device/cubot/one/prebuilt/bin/pvrsrvctl:system/vendor/bin/pvrsrvctl \
     device/cubot/one/prebuilt/bin/rc.fac:system/vendor/bin/rc.fac \
 	device/cubot/one/prebuilt/bin/rild:system/vendor/bin/rild \
