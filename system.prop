@@ -1,5 +1,11 @@
 #
 # Cubot One properties
 #
+rild.libpath=/system/lib/mtk-ril.so
+rild.libargs=-d /dev/ttyC0
 
-To be completed later....
+wifi.interface=wlan0
+wifi.tethering.interface=ap0
+wifi.direct.interface=p2p0
+
+ro.opengles.version=131072

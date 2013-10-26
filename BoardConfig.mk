@@ -24,9 +24,6 @@
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 
-# inherit from the common version
--include device/mediatek/mt6589-common/BoardConfigCommon.mk
-
 # Info
 TARGET_BOOTLOADER_BOARD_NAME := G800
 TARGET_OTA_ASSERT_DEVICE := CUBOT ONE,G800
@@ -35,6 +32,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += TARGET_BOOTLOADER_BOARD_NAME= CUBOT ONE
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_VARIANT := cortex-a7
 TARGET_BOARD_PLATFORM := MT6589
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
@@ -58,6 +56,13 @@ BOARD_USES_MTK_AUDIO := true
 BOARD_EGL_CFG := $(BOARD_CONFIG_DIR)/egl.cfg
 BOARD_MTK_LIBSENSORS_NAME :=
 BOARD_MTK_LIB_SENSOR :=
+USE_OPENGL_RENDERER := true
+
+TARGET_PROVIDES_LIBAUDIO := true
+TARGET_PROVIDES_LIBLIGHT := true
+BOARD_PROVIDES_LIBRIL := true
+#BOARD_HAVE_BLUETOOTH := true
+#BOARD_HAVE_BLUETOOTH_BCM := false
 
 # GPS
 ifeq ($(MTK_AGPS_APP), yes)
@@ -83,7 +88,9 @@ P2P_SUPPLICANT_VERSION := VER_0_8_X
 endif
 
 # Kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/cubot/one/boot.mk
 TARGET_PREBUILT_KERNEL := device/cubot/one/kernel
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/gadget/lun%d/file
 
 ifeq ($(strip $(MTK_NAND_PAGE_SIZE)), 4K)
   BOARD_NAND_PAGE_SIZE := 4096 -s 128
