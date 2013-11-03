@@ -1,0 +1,6 @@
+on post-fs
+# CMMB Driver
+    insmod /system/lib/modules/cmmbdrv.ko
+on post-fs-data
+# CMMB data
+    mkdir /data/misc/cmmb 0775 media media

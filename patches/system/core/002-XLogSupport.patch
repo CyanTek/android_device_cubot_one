@@ -1,0 +1,37 @@
+commit 71fde6458df8b334cd97710f176eb7a12cf53bf2
+Author: Jens Andersen <jens.andersen@gmail.com>
+Date:   Tue Oct 8 13:31:08 2013 +0200
+
+    MediaTek: WIP xlog support. Needs to be ifdef'ed
+    
+    Change-Id: I003ab096a5dc71f25438ae3c6dbd72005d82ee77
+
+diff --git a/liblog/logd_write.c b/liblog/logd_write.c
+index 4f6d45e..52d67c3 100644
+--- a/liblog/logd_write.c
++++ b/liblog/logd_write.c
+@@ -356,6 +356,24 @@ int __android_log_buf_print(int bufID, int prio, const char *tag, const char *fm
+     return __android_log_buf_write(bufID, prio, tag, buf);
+ }
+ 
++struct xlog_record {
++        const char *tag_str;
++        const char *fmt_str;
++        int prio;
++};
++
++int __xlog_buf_printf(int bufid, const struct xlog_record *rec, ...)
++{
++    va_list ap;
++    char buf[LOG_BUF_SIZE];
++
++    va_start(ap, rec->fmt_str);
++    vsnprintf(buf, LOG_BUF_SIZE, rec->fmt_str, ap);
++    va_end(ap);
++
++    return __android_log_buf_write(bufid, rec->prio, rec->tag_str, buf);
++}
++
+ void __android_log_assert(const char *cond, const char *tag,
+ 			  const char *fmt, ...)
+ {

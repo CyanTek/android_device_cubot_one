@@ -1,0 +1,87 @@
+commit 04799e304c2f75de05d87bb1f3d5db08edb44513
+Author: Jens Andersen <jens.andersen@gmail.com>
+Date:   Tue Oct 8 18:10:46 2013 +0200
+
+    Add support for init mknod command.
+    
+    This is required for statically allocated devices.
+    These don't hit ueventd and hence doesn't automatically get a device node.
+    
+    Change-Id: I83d19f0666e1f1bbb369b226fba019994d403a89
+
+diff --git a/init/builtins.c b/init/builtins.c
+index 1d8854d..e6ab6c1 100644
+--- a/init/builtins.c
++++ b/init/builtins.c
+@@ -418,6 +418,38 @@ int do_mkdir(int nargs, char **args)
+     return 0;
+ }
+ 
++int do_mknod(int nargs, char **args)
++{
++    dev_t dev;
++    int major;
++    int minor;
++    int mode;
++
++    /* mknod <path> <type> <major> <minor> */
++
++    if (nargs != 5) {
++        return -1;
++    }
++
++    major = strtoul(args[3], 0, 0);
++    minor = strtoul(args[4], 0, 0);
++    dev = (major << 8) | minor;
++
++    if (strcmp(args[2], "c") == 0) {
++        mode = S_IFCHR;
++    } else {
++        mode = S_IFBLK;
++    }
++    if (mknod(args[1], mode, dev)) {
++        ERROR("init: mknod failed");
++        return -1;
++    }
++
++    return 0;
++}
++
++
++
+ static struct {
+     const char *name;
+     unsigned flag;
+diff --git a/init/init_parser.c b/init/init_parser.c
+index 66baac8..b8825b4 100644
+--- a/init/init_parser.c
++++ b/init/init_parser.c
+@@ -128,6 +128,7 @@ int lookup_keyword(const char *s)
+         if (!strcmp(s, "kdir")) return K_mkdir;
+         if (!strcmp(s, "ount_all")) return K_mount_all;
+         if (!strcmp(s, "ount")) return K_mount;
++	if (!strcmp(s, "knod")) return K_mknod;
+         break;
+     case 'o':
+         if (!strcmp(s, "n")) return K_on;
+diff --git a/init/keywords.h b/init/keywords.h
+index b0b2b54..c0c54da 100644
+--- a/init/keywords.h
++++ b/init/keywords.h
+@@ -38,6 +38,8 @@ int do_chmod(int nargs, char **args);
+ int do_loglevel(int nargs, char **args);
+ int do_load_persist_props(int nargs, char **args);
+ int do_wait(int nargs, char **args);
++int do_mknod(int nargs, char **args);
++
+ #define __MAKE_KEYWORD_ENUM__
+ #define KEYWORD(symbol, flags, nargs, func) K_##symbol,
+ enum {
+@@ -96,6 +98,7 @@ enum {
+     KEYWORD(chown,       COMMAND, 2, do_chown)
+     KEYWORD(chmod,       COMMAND, 2, do_chmod)
+     KEYWORD(loglevel,    COMMAND, 1, do_loglevel)
++    KEYWORD(mknod,       COMMAND, 4, do_mknod)
+     KEYWORD(load_persist_props,    COMMAND, 0, do_load_persist_props)
+     KEYWORD(ioprio,      OPTION,  0, 0)
+ #ifdef __MAKE_KEYWORD_ENUM__

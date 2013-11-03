@@ -16,6 +16,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, build/target/product/full.mk)
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
+$(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := CUBOT 0NE
@@ -33,10 +34,10 @@ endif
 # Configs
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,device/cubot/one/configs,system)
-
-# MediaTek framework
+	
+# Ramdisk
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,device/cubot/one/mediatek-framework,system)
+    $(call find-copy-subdir-files,*,device/cubot/one/rootdir,root)	
 	
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -92,7 +93,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     static_busybox \
     make_ext4fs \
-    setup_fs	
+    setup_fs \
+    com.android.future.usb.accessory
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.secure=0 \
+    ro.allow.mock.location=0 \
+    persist.mtk.aee.aed=on \
+    ro.debuggable=1 \
+    persist.sys.usb.config=mass_storage \
+    persist.service.acm.enable=0 \
+    ro.mount.fs=EXT4	
 
 # Cubot One uses high-density artwork
 PRODUCT_AAPT_CONFIG := normal xhdpi hdpi

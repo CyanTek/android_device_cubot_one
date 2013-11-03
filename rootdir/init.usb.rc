@@ -12,7 +12,7 @@ on post-fs-data
     chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
 
     write /sys/class/android_usb/android0/f_rndis/wceis 1
-    write /sys/class/android_usb/android0/f_rndis/manufacturer MediaTek
+    write /sys/class/android_usb/android0/f_rndis/manufacturer MediaTek    
     write /sys/class/android_usb/android0/f_rndis/vendorID $sys.usb.vid
 
 # Used to set USB configuration at boot and to switch the configuration
@@ -256,8 +256,8 @@ on property:sys.usb.config=mass_storage,adb,acm
     write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state $sys.usb.config
-
+    setprop sys.usb.state $sys.usb.config  
+    
 #24.mtp,mass_storage,acm
 on property:sys.usb.config=mtp,mass_storage,acm
     write /sys/class/android_usb/android0/enable 0

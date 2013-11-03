@@ -79,3 +79,6 @@ ril.radiooff.poweroffMD=0
 dalvik.vm.mtk-stack-trace-file=/data/anr/mtk_traces.txt
 mediatek.wlan.chip=MT6628
 mediatek.wlan.module.postfix=_mt6628
+
+dalvik.vm.dexopt-data-only=1
+ro.zygote.preload.enable=0

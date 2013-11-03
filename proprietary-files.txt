@@ -39,9 +39,16 @@ lib/libMtkOmxVorbisDec.so
 lib/libMtkOmxVorbisEnc.so
 
 ### RIL
+bin/xlog
 lib/libril.so
 lib/librilmtk.so
 lib/mtk-ril.so
+lib/libnvram.so
+lib/libcustom_nvram.so
+
+### CONNECTIVITY
+bin/6620_launcher
+bin/wlan_loader
 
 ### DISPLAY
 lib/libdpframework.so
@@ -51,7 +58,7 @@ lib/libsync.so
 lib/hw/gralloc.default.so
 lib/hw/hwcomposer.mt6589.so
 
-### AUDIO & CAMERA
+### A/V & CAMERA
 lib/libaed.so
 lib/libaudiocustparam.so
 lib/libaudiosetting.so
@@ -62,12 +69,14 @@ lib/libcam.camshot.so
 lib/libcam.client.so
 lib/libcam.paramsmgr.so
 lib/libcam.utils.so
+lib/libcamalgo.so
 lib/libcamdrv.so
 lib/libcamera_jni_eglfence.so
 lib/libfeatureio.so
 lib/libimageio.so
 lib/libion.so
 lib/libcam_camera_exif.so
+lib/libJpgDecPipe.so
 lib/libJpgEncPipe.so
 lib/libcameracustom.so
 lib/libgn_camera_feature.so
@@ -82,6 +91,16 @@ lib/hw/audio_policy.stub.so
 lib/hw/libaudio.r_submix.default.so
 lib/hw/libaudio.usb.default.so
 lib/hw/camera.default.so
+##########################################--------- temp-begin
+#lib/libsurfaceflinger.so
+lib/libmedia.so
+lib/libstagefright.so
+lib/libstagefright_memutil.so
+lib/libstagefright_omx.so
+lib/libstagefright_wfd.so
+lib/libcamera_client.so
+lib/libcamera_metadata.so
+##########################################--------- temp-end
 
 # OTHER HW
 lib/hw/gps.default.so

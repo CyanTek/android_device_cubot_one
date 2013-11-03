@@ -1,0 +1,76 @@
+commit 3cd5947c5d350a7393056a2bb9f14192dfffd411
+Author: xplodwild <xplod@ouverta.fr>
+Date:   Tue Oct 8 23:07:57 2013 +0200
+
+    [1/2] GraphicBufferMapper: Support MediaTek extra device
+    
+    WIP: NEEDS IFDEF!!!
+    
+    Change-Id: I06bda9426ede59a4681aba903590b9e17fdee0b6
+    
+    Conflicts:
+    
+    	include/ui/GraphicBufferMapper.h
+    	libs/ui/GraphicBufferMapper.cpp
+
+diff --git a/include/ui/GraphicBufferMapper.h b/include/ui/GraphicBufferMapper.h
+index 858fb1b..cd74381 100644
+--- a/include/ui/GraphicBufferMapper.h
++++ b/include/ui/GraphicBufferMapper.h
+@@ -56,13 +56,17 @@ public:
+                      uint32_t w, uint32_t h, uint32_t format);
+ #endif
+ 
++    status_t getIonFd(buffer_handle_t handle, int *idx, int *num);
++
+     // dumps information about the mapping of this handle
+     void dump(buffer_handle_t handle);
+ 
+ private:
+     friend class Singleton<GraphicBufferMapper>;
+     GraphicBufferMapper();
++    ~GraphicBufferMapper();
+     gralloc_module_t const *mAllocMod;
++    extra_device_t *mExtraDev;
+ };
+ 
+ // ---------------------------------------------------------------------------
+diff --git a/libs/ui/GraphicBufferMapper.cpp b/libs/ui/GraphicBufferMapper.cpp
+index d16a1bb..67c8ca8 100644
+--- a/libs/ui/GraphicBufferMapper.cpp
++++ b/libs/ui/GraphicBufferMapper.cpp
+@@ -46,6 +46,11 @@ GraphicBufferMapper::GraphicBufferMapper()
+     }
+ }
+ 
++GraphicBufferMapper::~GraphicBufferMapper()
++{
++    gralloc_extra_close(mExtraDev);
++}
++
+ status_t GraphicBufferMapper::registerBuffer(buffer_handle_t handle)
+ {
+     ATRACE_CALL();
+@@ -121,5 +126,22 @@ status_t GraphicBufferMapper::perform(buffer_handle_t handle, int operation,
+     return err;
+ }
+ #endif
++
++status_t GraphicBufferMapper::getIonFd(buffer_handle_t handle, int *idx, int *num)
++{
++    ATRACE_CALL();
++    status_t err;
++
++    if (!mExtraDev) {
++        ALOGE("gralloc extra device is not supported");
++        return INVALID_OPERATION;
++    }
++
++    err = mExtraDev->getIonFd(mExtraDev, handle, idx, num);
++
++    ALOGW_IF(err, "getIonFd(...) failed %d (%s)", err, strerror(-err));
++    return err;
++}
++
+ // ---------------------------------------------------------------------------
+ }; // namespace android
