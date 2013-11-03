@@ -19,3 +19,4 @@
 #
 
 LOCAL_PATH := device/cubot/one/
+-include vendor/cubot/one/AndroidBoardVendor.mk

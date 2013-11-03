@@ -19,9 +19,9 @@ $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Discard inherited values and use our own instead.
-PRODUCT_NAME := CUBOT 0NE
-PRODUCT_DEVICE := CUBOT ONE
-PRODUCT_MODEL := CUBOT ONE
+PRODUCT_NAME := one
+PRODUCT_DEVICE := one
+PRODUCT_MODEL := one
 
 # Boot files
 LOCAL_PATH := device/cubot/one

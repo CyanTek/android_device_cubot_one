@@ -26,4 +26,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/cubot_one.mk
+    $(LOCAL_DIR)/device_one.mk
